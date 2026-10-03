@@ -1,0 +1,61 @@
+/* protect.css - build-time copy/paste deterrence for the editor handbook.
+   Paired with protect.js, inlined into every page by build.py.
+
+   Deterrence only. This raises the friction of casual copy/paste, page-saving
+   and printing; it CANNOT stop screenshots, a phone photo of the screen, or a
+   determined reader with devtools. A per-viewer watermark/traceability layer (not shipped in this template) is the
+   place for that; this file is only the friction half. */
+
+/* Make the reading surfaces (article + sidebar nav) non-selectable. */
+.content,
+.side {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ...but keep form fields (the search box) and any author-marked .copyable
+   block selectable. These rules win over the one above by equal-or-higher
+   specificity and later source order, and the search box lives outside
+   .content/.side anyway. */
+input,
+textarea,
+.copyable,
+.copyable * {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Blank the page for print. protect.js mirrors this via beforeprint for
+   browsers/timings that act on JS before this stylesheet rule. */
+@media print {
+  body { display: none !important; }
+}
+
+/* Author opt-out block: renders as a normal pre/code with a small Copy button.
+   Falls back to sane literals if the handbook theme tokens are absent. */
+.copyable {
+  position: relative;
+}
+.copyable .copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted, #9c9589);
+  background: var(--panel, #141315);
+  border: 1px solid var(--line-strong, rgba(241, 236, 225, 0.22));
+  border-radius: 7px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.copyable .copy-btn:hover {
+  color: var(--ink, #f1ece1);
+  border-color: var(--accent, #e0532f);
+}

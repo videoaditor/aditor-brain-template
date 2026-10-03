@@ -1,0 +1,14 @@
+{
+  "commitMessage": "vault: {{date}}",
+  "commitDateFormat": "YYYY-MM-DD HH:mm:ss",
+  "autoSaveInterval": 5,
+  "autoPushInterval": 5,
+  "autoPullInterval": 5,
+  "autoPullOnBoot": true,
+  "pullBeforePush": true,
+  "disablePush": false,
+  "syncMethod": "rebase",
+  "refreshSourceControl": true,
+  "showStatusBar": true,
+  "gitTimeout": 60
+}

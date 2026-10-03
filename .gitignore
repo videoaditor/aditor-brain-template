@@ -1,0 +1,21 @@
+# Obsidian per-user / per-device state - never share these (they cause constant conflicts)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/plugins/*/data.json.bak
+# Plugin binaries are fetched per machine by bootstrap / the brain agent, never
+# shared (they would churn and could carry platform-specific builds). Only each
+# plugin's data.json (shared settings) is tracked.
+.obsidian/plugins/*/main.js
+.obsidian/plugins/*/manifest.json
+.obsidian/plugins/*/styles.css
+
+# Obsidian trash
+.trash/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# handbook build venv
+scripts/build-handbook/.venv/

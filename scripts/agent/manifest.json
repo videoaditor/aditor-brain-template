@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "steps": [
+    { "version": 1, "title": "Ensure the Obsidian Git sync plugin is installed" }
+  ]
+}

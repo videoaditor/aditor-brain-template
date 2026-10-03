@@ -1,0 +1,33 @@
+name: vault-lint
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The brain agent runs on every operator machine, so its scripts are gated.
+      - name: Shellcheck the brain agent scripts
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y shellcheck
+          shellcheck --version
+          shellcheck scripts/agent/*.sh
+
+      - name: Run vault-lint
+        run: bash scripts/vault-lint.sh
+      - name: Parse the brain agent PowerShell scripts
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $failed = $false
+          Get-ChildItem scripts/agent/*.ps1 | ForEach-Object {
+            $errs = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$errs) | Out-Null
+            if ($errs -and $errs.Count -gt 0) { $errs | ForEach-Object { Write-Host "$($_)" }; $failed = $true }
+          }
+          if ($failed) { exit 1 }
